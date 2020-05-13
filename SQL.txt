@@ -1,0 +1,17 @@
+What are DB?
+Systems that allow users to store and organize data.
+
+PostGre SQL is Open Source, Free and multiplatform.
+
+SQL (Structured Query Language) 
+SQL is the programming language used to communicate with our Database.
+
+SQL 
+
+SELECT Customer_id, first_name, last_name
+FROM Sales
+ORDER BY first_name;
+
+PostgreSQL - SQL Engine
+PGAdmin - Graphical User Interface for connecting with PostGreSQL.
+
