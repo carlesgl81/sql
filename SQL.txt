@@ -15,3 +15,147 @@ ORDER BY first_name;
 PostgreSQL - SQL Engine
 PGAdmin - Graphical User Interface for connecting with PostGreSQL.
 
+SQL Sintax
+
+SELECT
+SELECT column_name FROM table_name
+SELECT C1, C2 FROM table_1
+SELECT * FROM Table_1
+
+SELECT DISTINCT
+Gets the different/unique values in a column.
+SELECT DISTINCT column FROM Table;
+
+COUNT Function
+Returns the number of input rows that match a specific condition of a query.
+SELECT COUNT(columnname) FROM TABLE;
+SELECT COUNT(DISTINCT name) FROM Table;
+
+SELECT and WHERE
+The WHERE Statement allows us to specify conditions on columns for the rows to be returned.
+
+SELECT Column1, Column2
+FROM Table
+WHERE conditions;
+
+Comparison Operators
+= Equal
+> Greater Than
+< Less Than
+>= Greater than or equal to
+<= Less than or equal to
+<> or != Not Equal to
+
+Logical Operators
+AND, OR, NOT
+
+SELECT name FROM Table 
+WHERE name = 'David' AND choice = 'Red'
+
+In PostgreSQL ';' at the end is optional.
+
+SELECT title FROM film
+WHERE Rental_rate > 4 AND replacement_cost >= 19.99 AND rating = 'R';
+
+SELECT COUNT(*) FROM film
+WHERE Rental_rate > 4 OR replacement_cost >= 19.99 AND rating = 'R';
+
+Challenge: Find the email of the customer Nancy Thomas:
+SELECT email FROM Customer
+WHERE First_name = 'Nancy' AND Last_name = 'Thomas';
+
+Challenge 2: Get the description for the movie Outlaw Hanky
+SELECT description FROM film
+WHERE title = 'Outlaw Hanky'
+
+Challenge 3: Get the phone number for the customer who leaves in the 259 Ipoh Drive address.
+SELECT Phone FROM Address
+WHERE address = '259 Ipoh Drive';
+
+ORDER BY
+You can use ORDER BY to sort rows based on a column value, in either ascending or descending order.
+SELECT Column1, Column2
+FROM table
+ORDER BY column1 ASC/DESC;
+
+Ascending is default if you don´t specify anything.
+
+SELECT store_id, first_name, last_name FROM customer
+ORDER BY store_id DESC, first_name ASC
+
+LIMIT
+Limits the shown results.
+It is the last command to get executed.
+
+Shows all from payment date in descensing order but only the first 5 results.
+SELECT * FROM payment
+ORDER BY payment_date DESC
+LIMIT 5
+
+Challenge1: Find the 10 first customers who paid something in the company.
+SELECT customer_id FROM payment
+ORDER BY payment_date ASC
+LIMIT 10
+
+Challenge2: Titles of the 5 shortest (time) movies.
+SELECT title FROM film
+ORDER BY length ASC
+LIMIT 5
+
+Challenge3: How many movies are in the DB with 50 or less minutes.
+SELECT COUNT(title) FROM film
+WHERE length <= 50
+
+BETWEEN
+Matches a value against a range of values:
+	Value >= low AND value <= high
+	Value BETWEEN low AND high.
+	
+NOT BETWEEN
+	Value < low OR value > high
+	Value NOT BETWEEN low AND high
+
+IN
+Value IN(option1, option2,...,option_n)
+So in this query, everything in red and/or blue will return to us.
+	SELECT color FROM table
+	WHERE color IN('red','blue')
+Here, will find the payments with 0.99, 1.98 and 1.99.
+	SELECT COUNT (*) FROM payment
+	WHERE amount IN (0.99,1.98,1.99)
+
+NOT IN
+If we use NOT IN in the last query, we will get all the payments with other amounts.
+
+LIKE / ILIKE
+Using Pattern Matching
+	To find out what emails are ending in gmail.com or all names that begin with A.
+	2 Wildcard characters for this:
+		% : Matches any sequence of characters. (Names begin with A. WHERE name LIKE 'A%'. Names that end with an a. WHERE name LIKE '%a')
+		_ : Matches any single character. (Get all the Rocky films(1,2,3,4). WHERE title LIKE 'Rocky _'
+	LIKE is case-sensitive. ILIKE is not case-sensitive.
+	We can combine pattern matching operators to create more complex patterns (WHERE name LIKE '_her%'. to find out cHERyl, tHEResa, sHERrri)
+ 
+BIG Challenge 1:
+How many payment transactions were greater than $5 ?
+SELECT COUNT(amount) FROM payment
+WHERE amount > 5
+How many actors have first name that starts with letter P?
+SELECT COUNT(*) FROM actor
+WHERE first_name LIKE 'P%'
+How many unique districts are our customer from?
+SELECT Count(DISTINCT district)
+FROM address
+List of the names from last question.
+SELECT DISTINCT (district)
+FROM address
+How many films have a rating of R and a replacement cost between $5 and $15?
+SELECT COUNT (film_id) 
+FROM film
+WHERE rating = 'R' AND replacement_cost BETWEEN 5 AND 15
+How many films have the world Truman somewhere in the title?
+SELECT COUNT (Title) FROM film
+WHERE Title LIKE '%Truman%'
+
+
+
