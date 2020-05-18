@@ -158,4 +158,92 @@ SELECT COUNT (Title) FROM film
 WHERE Title LIKE '%Truman%'
 
 
+Aggregate Functions
+take multiple inputs and return a single output.
+
+Most Common Aggregate Functions:
+AVG() - Average Value. It returns a floating point value. You can use ROUND() to specify precision after the decimal. SELECT AVG(replacement_cost) FROM film; SELECT ROUND(AVG(replacement_cost),2) FROM film; Number 2 is for the decimal positions in the result, i.e. 2,35.
+COUNT() - Returns number of values
+MAX() - Returns maximum value SELECT MAX(replacement_cost), MIN(replacement_cost) FROM film;
+MIN() - Returns minimum value. SELECT MIN(replacement_cost) FROM film;
+SUM() - Returns the sum of all values
+
+Aggregate Functions work only with SELECT or HAVING.
+
+GROUP BY
+Aggregates columns per some category.
+SELECT category_col, AGG(data_col)
+FROM table
+WHERE category_col!='A'
+GROUP BY category_col
+
+The category_col has to be in the SELECT and in the GROUP BY
+
+SELECT company, SUM(Sales)
+FROM finance_table
+GROUP BY company
+ORDER BY SUM(Sales)
+LIMIT 5
+
+DATE Function
+SELECT DATE(payment_date) FROM Payment
+
+Between Staff_id 1 and 2, who got more payments? Not $$, but the quantity of payments.
+SELECT staff_id, COUNT(payment_id) FROM payment
+Group by staff_id 
+ORDER by COUNT(payment_id) DESC
+
+Select the average of the replacement cost per Rating
+SELECT ROUND(AVG(replacement_cost)), rating FROM film
+Group by (rating)
+
+Customers ID of the top 5 customers by total spend?
+SELECT customer_id, SUM(amount) FROM payment
+Group by customer_id
+ORDER BY SUM(amount) DESC
+LIMIT 5
+
+HAVING Clause
+allows us to filter after an aggregation has already taking place. So after the Group By.
+SELECT Company, SUM(sales)
+FROM finance_table
+WHERE company!='Google'
+GROUP BY Company
+HAVING SUM(sales)>1000
+We use HAVING instead of WHERE as the AGG Function result comes after the GROUP BY.
+
+SELECT customer_id, SUM(amount) FROM payment
+GROUP BY customer_id
+HAVING SUM (amount) > 100
+
+Challenge:
+Get the Customer´s ID who spent more than 40 times in our store.
+SELECT customer_id, COUNT(payment_id) FROM Payment
+GROUP BY customer_id
+HAVING COUNT(payment_id) >= 40
+
+Challenge:
+Customers_id who spent more than 100$ in transactions with our Staff_id member 2.
+SELECT customer_id, SUM(amount) FROM Payment
+WHERE staff_id = 2
+GROUP BY customer_id
+HAVING SUM(amount) > 100
+
+Assesment Test
+Return the customer IDs of customers who have spent at least $110 with the staff member who has an ID of 2.
+SELECT customer_id, SUM(amount) FROM Payment
+WHERE staff_id = 2
+GROUP BY customer_id
+HAVING SUM(amount) >= 110
+
+How many films begin with the letter J?
+SELECT COUNT(film_id) FROM Film
+WHERE title LIKE 'J%'
+
+What customer has the highest customer ID number whose name starts with an 'E' and has an address ID lower than 500?
+SELECT first_name, last_name, address_ID, customer_ID FROM Customer
+WHERE First_Name LIKE 'E%' AND Address_ID < 500
+ORDER By Customer_ID DESC
+
+
 
